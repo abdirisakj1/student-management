@@ -1,0 +1,41 @@
+@SmartWasteManagement_HostAddress = http://localhost:5087
+
+### Register
+POST {{SmartWasteManagement_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Test User",
+  "email": "user@example.com",
+  "password": "password123",
+  "phone": "+1234567890"
+}
+
+### Login
+POST {{SmartWasteManagement_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+### Users (Bearer token required; list/delete = Admin)
+GET {{SmartWasteManagement_HostAddress}}/api/users
+Authorization: Bearer {{token}}
+
+###
+GET {{SmartWasteManagement_HostAddress}}/api/users/{{userId}}
+Authorization: Bearer {{token}}
+
+###
+DELETE {{SmartWasteManagement_HostAddress}}/api/users/{{userId}}
+Authorization: Bearer {{token}}
+
+### Trucks
+GET {{SmartWasteManagement_HostAddress}}/api/trucks
+Authorization: Bearer {{token}}
+
+### Places
+GET {{SmartWasteManagement_HostAddress}}/api/places
+Authorization: Bearer {{token}}

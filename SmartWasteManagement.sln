@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tourism_Management", "Tourism_Management.csproj", "{DC885BDB-8379-07EE-8823-340AE2910FE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartWasteManagement", "SmartWasteManagement.csproj", "{DC885BDB-8379-07EE-8823-340AE2910FE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
