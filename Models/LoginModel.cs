@@ -17,7 +17,7 @@ public class LoginRequest
 }
 
 /// <summary>
-/// Registration request payload. New accounts are created with role User.
+/// Registration request payload. New accounts are created with role Customer.
 /// </summary>
 public class RegisterRequest
 {
@@ -36,6 +36,9 @@ public class RegisterRequest
     [Phone]
     [StringLength(30)]
     public string? Phone { get; set; }
+
+    [StringLength(500)]
+    public string? Address { get; set; }
 }
 
 /// <summary>
@@ -44,8 +47,16 @@ public class RegisterRequest
 public class AuthResponse
 {
     public string Token { get; set; } = string.Empty;
+    public string? RefreshToken { get; set; }
     public DateTime ExpiresAt { get; set; }
+    public DateTime? RefreshExpiresAt { get; set; }
     public UserSummary User { get; set; } = null!;
+}
+
+public class RefreshTokenRequest
+{
+    [Required]
+    public string RefreshToken { get; set; } = string.Empty;
 }
 
 /// <summary>
@@ -58,14 +69,26 @@ public class UserSummary
     public string Email { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public string? Phone { get; set; }
+    public string? Address { get; set; }
+    public string? AssignedTruckId { get; set; }
+    public string? AssignedRouteId { get; set; }
+    public string? Username { get; set; }
+    public string? AvatarUrl { get; set; }
+    public string Status { get; set; } = "Online";
 
     public static UserSummary FromUser(User user) =>
         new()
         {
             Id = user.Id ?? string.Empty,
             FullName = user.FullName,
+            Username = user.Username ?? user.FullName,
             Email = user.Email,
             Role = Roles.Normalize(user.Role),
-            Phone = user.Phone
+            Phone = user.Phone,
+            Address = user.Address,
+            AssignedTruckId = user.AssignedTruckId,
+            AssignedRouteId = user.AssignedRouteId,
+            AvatarUrl = user.AvatarUrl,
+            Status = string.IsNullOrWhiteSpace(user.Status) ? "Online" : user.Status
         };
 }

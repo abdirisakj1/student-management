@@ -5,9 +5,6 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SmartWasteManagement.Models;
 
-/// <summary>
-/// User document stored in the Users collection.
-/// </summary>
 public class User
 {
     [BsonId]
@@ -19,24 +16,45 @@ public class User
     [StringLength(200)]
     public string FullName { get; set; } = string.Empty;
 
+    [StringLength(100)]
+    public string? Username { get; set; }
+
     [Required]
     [EmailAddress]
     [StringLength(256)]
     public string Email { get; set; } = string.Empty;
 
-    /// <summary>
-    /// BCrypt password hash; never returned in JSON responses.
-    /// </summary>
     [JsonIgnore]
     public string Password { get; set; } = string.Empty;
 
-    /// <summary>Stored in MongoDB as lowercase <c>role</c> (Compass default) or <c>Role</c>.</summary>
     [BsonElement("role")]
     [Required]
     [StringLength(50)]
-    public string Role { get; set; } = Roles.User;
+    public string Role { get; set; } = Roles.Customer;
 
     [Phone]
     [StringLength(30)]
     public string? Phone { get; set; }
+
+    [StringLength(500)]
+    public string? Address { get; set; }
+
+    [StringLength(50)]
+    public string? LicenseNumber { get; set; }
+
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? AssignedTruckId { get; set; }
+
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? AssignedRouteId { get; set; }
+
+    [StringLength(50)]
+    public string Status { get; set; } = "Active";
+
+    public bool IsActive { get; set; } = true;
+
+    [StringLength(500000)]
+    public string? AvatarUrl { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

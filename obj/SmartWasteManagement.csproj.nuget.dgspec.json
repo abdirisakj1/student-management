@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Desktop\\University\\asp\\smart-waste-Management\\SmartWasteManagement.csproj": {}
+    "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Desktop\\University\\asp\\smart-waste-Management\\SmartWasteManagement.csproj": {
+    "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\University\\asp\\smart-waste-Management\\SmartWasteManagement.csproj",
+        "projectUniqueName": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
         "projectName": "SmartWasteManagement",
-        "projectPath": "C:\\Users\\hp\\Desktop\\University\\asp\\smart-waste-Management\\SmartWasteManagement.csproj",
+        "projectPath": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\University\\asp\\smart-waste-Management\\obj\\",
+        "outputPath": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -47,6 +47,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.26.2, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

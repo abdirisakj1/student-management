@@ -32,7 +32,7 @@ public class PlacesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = $"{Roles.User},{Roles.Admin},{Roles.TruckDriver}")]
+    [Authorize(Roles = $"{Roles.Customer},{Roles.Admin},{Roles.Driver}")]
     public async Task<ActionResult<Place>> CreatePlace([FromBody] Place place)
     {
         place.Id = null;

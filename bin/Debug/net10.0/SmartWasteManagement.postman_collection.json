@@ -1,0 +1,253 @@
+{
+  "info": {
+    "_postman_id": "smart-waste-management-api",
+    "name": "Smart Waste Management API",
+    "description": "Import this collection into Postman to test the Smart Waste Management API.\n\n**Quick start**\n1. Run the API: `dotnet run`\n2. Import this file: Postman → Import → select this JSON\n3. Run **Auth → Login** (or Register) — the JWT is saved automatically\n4. Call the other requests; they use `{{token}}` from the collection\n\nDefault base URL: `http://localhost:5087`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5087" },
+    { "key": "token", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "truckId", "value": "" },
+    { "key": "placeId", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "No token required. Login/Register save `token` and `userId` automatically.",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Test User\",\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"+252612345678\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register",
+            "description": "Creates a new account (role: User) and returns JWT."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.token) pm.collectionVariables.set('token', json.token);",
+                  "    if (json.user && json.user.id) pm.collectionVariables.set('userId', json.user.id);",
+                  "    pm.test('Token saved', () => pm.expect(json.token).to.be.a('string').and.not.empty);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "description": "Returns JWT. Token is saved to collection variable `token`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.token) pm.collectionVariables.set('token', json.token);",
+                  "    if (json.user && json.user.id) pm.collectionVariables.set('userId', json.user.id);",
+                  "    pm.test('Token saved', () => pm.expect(json.token).to.be.a('string').and.not.empty);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Bearer required. List/Delete need Admin role.",
+      "item": [
+        {
+          "name": "Get all users (Admin)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/users",
+            "description": "Requires role: Admin"
+          }
+        },
+        {
+          "name": "Get user by id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/users/{{userId}}",
+            "description": "Own profile or Admin can view any user."
+          }
+        },
+        {
+          "name": "Delete user (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/users/{{userId}}",
+            "description": "Requires role: Admin. Returns 204 on success."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trucks",
+      "description": "GET: any authenticated user. Create/Update/Delete: Admin only.",
+      "item": [
+        {
+          "name": "Get all trucks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/trucks"
+          }
+        },
+        {
+          "name": "Get truck by id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/trucks/{{truckId}}"
+          }
+        },
+        {
+          "name": "Create truck (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"truckNumber\": \"TRK-001\",\n  \"driverName\": \"Ahmed Hassan\",\n  \"status\": \"Active\",\n  \"area\": \"Hodan District\"\n}"
+            },
+            "url": "{{baseUrl}}/api/trucks",
+            "description": "Requires role: Admin"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set('truckId', json.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update truck (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"truckNumber\": \"TRK-001\",\n  \"driverName\": \"Ahmed Hassan\",\n  \"status\": \"OnRoute\",\n  \"area\": \"Waberi District\"\n}"
+            },
+            "url": "{{baseUrl}}/api/trucks/{{truckId}}",
+            "description": "Requires role: Admin"
+          }
+        },
+        {
+          "name": "Delete truck (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/trucks/{{truckId}}",
+            "description": "Requires role: Admin. Returns 204 on success."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Places",
+      "description": "Waste place reports. Create: User, Admin, or TruckDriver. Update/Delete: Admin.",
+      "item": [
+        {
+          "name": "Get all places",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/places"
+          }
+        },
+        {
+          "name": "Get place by id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/places/{{placeId}}"
+          }
+        },
+        {
+          "name": "Create place (report)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Overflowing bin near market\",\n  \"description\": \"Waste has not been collected for 3 days.\",\n  \"location\": \"Bakaaraha, Mogadishu\",\n  \"imageUrl\": \"https://example.com/photo.jpg\",\n  \"status\": \"Pending\"\n}"
+            },
+            "url": "{{baseUrl}}/api/places",
+            "description": "Roles: User, Admin, TruckDriver"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.collectionVariables.set('placeId', json.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update place (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Overflowing bin near market\",\n  \"description\": \"Assigned to collection team.\",\n  \"location\": \"Bakaaraha, Mogadishu\",\n  \"imageUrl\": \"https://example.com/photo.jpg\",\n  \"status\": \"InProgress\"\n}"
+            },
+            "url": "{{baseUrl}}/api/places/{{placeId}}",
+            "description": "Requires role: Admin"
+          }
+        },
+        {
+          "name": "Delete place (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/places/{{placeId}}",
+            "description": "Requires role: Admin. Returns 204 on success."
+          }
+        }
+      ]
+    }
+  ]
+}

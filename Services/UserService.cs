@@ -9,9 +9,11 @@ namespace SmartWasteManagement.Services;
 public interface IUserService
 {
     Task<List<User>> GetAllAsync();
+    Task<List<User>> GetByRoleAsync(string role);
     Task<User?> GetByIdAsync(string id);
     Task<User?> GetByEmailAsync(string email);
     Task<User> CreateAsync(User user);
+    Task<bool> UpdateAsync(string id, User user);
     Task<bool> DeleteAsync(string id);
 }
 
@@ -38,6 +40,13 @@ public class UserService : IUserService
         return list;
     }
 
+    public async Task<List<User>> GetByRoleAsync(string role)
+    {
+        var normalized = Roles.Normalize(role);
+        var all = await GetAllAsync();
+        return all.Where(u => Roles.Normalize(u.Role) == normalized).ToList();
+    }
+
     public async Task<User?> GetByIdAsync(string id)
     {
         if (!MongoDB.Bson.ObjectId.TryParse(id, out _))
@@ -58,8 +67,19 @@ public class UserService : IUserService
 
     public async Task<User> CreateAsync(User user)
     {
+        user.Role = Roles.Normalize(user.Role);
         await _users.InsertOneAsync(user);
         return user;
+    }
+
+    public async Task<bool> UpdateAsync(string id, User user)
+    {
+        if (!MongoDB.Bson.ObjectId.TryParse(id, out _))
+            return false;
+        user.Id = id;
+        user.Role = Roles.Normalize(user.Role);
+        var result = await _users.ReplaceOneAsync(u => u.Id == id, user);
+        return result.ModifiedCount > 0 || result.MatchedCount > 0;
     }
 
     public async Task<bool> DeleteAsync(string id)
