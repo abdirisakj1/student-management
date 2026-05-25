@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {}
+    "C:\\Users\\hp\\Desktop\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {
+    "C:\\Users\\hp\\Desktop\\smart-waste-Management-backend\\SmartWasteManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
+        "projectUniqueName": "C:\\Users\\hp\\Desktop\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
         "projectName": "SmartWasteManagement",
-        "projectPath": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
+        "projectPath": "C:\\Users\\hp\\Desktop\\smart-waste-Management-backend\\SmartWasteManagement.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\University\\asp\\Smart-Wast-Management\\smart-waste-Management-backend\\obj\\",
+        "outputPath": "C:\\Users\\hp\\Desktop\\smart-waste-Management-backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
